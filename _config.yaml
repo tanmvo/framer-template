@@ -2,9 +2,9 @@
 # Build config
 # =============================================
 
-root:             ./
-dest:             <%= site.root %>
-assets:           <%= site.dest %>/assets
+root:             .
+dest:             <%= site.root %>/project
+assets:           <%= site.root %>/assets
 
 # Data
 data:             src/templates/_data

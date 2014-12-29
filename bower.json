@@ -1,12 +1,12 @@
 {
-  "name": "static-site-template",
+  "name": "framer-template",
   "version": "0.0.0",
-  "homepage": "http://github.com/thetanman/static-site-template",
+  "homepage": "http://github.com/thetanman/framer-template",
   "authors": [
     "Tan Vo <tan.m.vo@gmail.com>"
   ],
-  "description": "Static Site Template built with Assemble and Bootstrap",
-  "main": "index.html",
+  "description": "Framer Template built with Assemble and Bootstrap",
+  "main": "app.js",
   "moduleType": [
     "node"
   ],

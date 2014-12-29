@@ -5,22 +5,6 @@ module.exports = function(grunt) {
 		site: grunt.file.readYAML('_config.yaml'),
 		
 		assemble: {
-		
-		  projects: {
-	        src: ['<%= site.projects %>'],
-	        dest: '<%= site.dest %>/projects/',
-	        options: {
-		        flatten: true,
-		        assets: '<%= site.assets %>',
-		        data: '<%= site.data %>/*.{json,yml}',
-
-		        // Templates
-		        partials: '<%= site.includes %>',
-		        layoutdir: '<%= site.layouts %>',
-		        layout: 'project.hbs',
-	    	},
-	      },
-
 	      site: {
 	        src: ['<%= site.pages %>'],
 	        dest: '<%= site.dest %>',
@@ -32,40 +16,43 @@ module.exports = function(grunt) {
 		        // Templates
 		        partials: '<%= site.includes %>',
 		        layoutdir: '<%= site.layouts %>',
-		        layout: '<%= site.layout %>',
-		        collections: [{
-		        	name: 'project',
-		        	sortby: 'order',
-		        	sortorder: 'ascending',
-		        }]
+		        layout: '<%= site.layout %>'
 	        },
 	      },
 
 		},
 
-		// browserSync: {
-			
-		// 	bsFiles: {
-		//         src : ['<%= site.pages %>', '<%= site.dest %>/projects/*.html', '<%= site.assets %>/css/*.css']
-		//     },
-		    
-		//     options: {
-		//         server: {
-		//             baseDir: "<%= site.dest %>",
-		//             tunnel: false,
-		//             injectChanges: true,
-		//         },
-		//         watchTask: true,
-		//     }
-
-		// },
-
 		clean: {
-			server: ['<%= assemble.projects.dest %>', '<%= site.assets %>', '!<%= site.assets %>' ]
+			server: ['<%= site.dest %>']
+		},
+
+		coffee: {
+			compile: {
+				files: {
+					'<%= site.dest %>/app.js': '<%= site.assets %>/coffeescript/*.coffee'
+				}
+			}
 		},
 
 		concurrent: {
-			server: ['less', 'assemble:site', 'assemble:projects'],
+			server: ['less', 'assemble:site', 'coffee:compile'],
+		},
+
+		copy: {
+			framer: {
+				expand: true,
+				cwd: '<%= site.assets %>/js/framer/',
+				src: '**',
+				dest: '<%= site.dest %>/framer/',
+				flatten: true
+			},
+			img: {
+				expand: true,
+				cwd: '<%= site.assets %>/img/default/',
+				src: '*.{png,jpg,gif}',
+				dest: '<%= site.dest %>/images/',
+				flatten: true
+			}
 		},
 
 		connect: {
@@ -96,33 +83,16 @@ module.exports = function(grunt) {
 			},
 		},
 
-		replace: {
-			// dist: {
-			// 	options: {
-			// 		patterns: [
-			// 			{
-			// 				match: "href=\"/\"",
-			// 				replacement: "href=\"http://www.tanmvo.com\""
-			// 			}
-			// 		]
-			// 	},
-			// 	files: {
-			// 		expand: true,
-			// 		flatten: true,
-			// 		src: ['<%= site.dest %>/index.html'],
-			// 		dest: '<%= site.dest %>'
-			// 	}
-			// }
-		},
+		replace: {},
 
 		watch: {
 			options: {
 				livereload: true,
 			},
 			
-			assemble: {
-				files: ['<%= site.pages %>', '<%= site.data %>/*.json', '<%= site.includes %>', '<%= site.projects %>' ],
-				tasks: ['assemble']
+			app: {
+				files: ['assets/coffeescript/app.coffee'],
+				tasks: ['coffee']
 			},
 
 			less: {
@@ -156,12 +126,14 @@ module.exports = function(grunt) {
 	// grunt.loadNpmTasks('grunt-browser-sync');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-coffee');
 	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-replace');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', ['clean', 'concurrent:server', 'connect', 'watch']);
+	grunt.registerTask('default', ['clean', 'concurrent:server', 'copy', 'connect', 'watch']);
 	grunt.registerTask('dist', ['clean', 'assemble', 'replace:dist']);
 }
 
