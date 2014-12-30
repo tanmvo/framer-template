@@ -1,18 +1,40 @@
 (function() {
-  var layerA;
+  var layerA, layerB;
 
   layerA = new Layer();
 
-  layerA.x = 10;
+  layerA.width = 320;
 
-  layerA.y = 10;
+  layerA.height = 578;
 
-  layerA.borderRadius = 10;
+  layerA.center();
 
-  layerA.backgroundColor = "red";
+  layerB = new Layer({
+    superLayer: layerA
+  });
 
-  layerA.centerX();
+  layerB.borderRadius = "10";
 
-  print("Hello, World!");
+  layerB.backgroundColor = "red";
+
+  layerB.width = 300;
+
+  layerB.height = 60;
+
+  layerB.style = {
+    "border-radius": "4px",
+    "text-align": "center",
+    "padding": "15px 20px"
+  };
+
+  layerB.html = "Submit";
+
+  layerB.centerX();
+
+  layerB.y = 508;
+
+  layerB.on(Events.Click, function() {
+    return print(this.frame);
+  });
 
 }).call(this);
