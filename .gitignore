@@ -25,6 +25,7 @@ build/Release
 
 node_modules
 bower_components
+project
 
 # Banish .DS_Store
 

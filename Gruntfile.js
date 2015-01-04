@@ -46,6 +46,13 @@ module.exports = function(grunt) {
 				dest: '<%= site.dest %>/framer/',
 				flatten: true
 			},
+			templates: {
+				expand: true,
+				cwd: '<%= site.root %>/bower_components/framer-templates/templates/',
+				src: '**',
+				dest: '<%= site.dest %>/framer/templates/',
+				flatten: true
+			},
 			img: {
 				expand: true,
 				cwd: '<%= site.assets %>/img/default/',
@@ -94,7 +101,10 @@ module.exports = function(grunt) {
 				files: ['assets/coffeescript/app.coffee'],
 				tasks: ['coffee']
 			},
-
+			assemble: {
+				files: ['<%= site.pages %>'],
+				tasks: ['assemble']
+			},
 			less: {
 				files: ['src/less/**/*.less'],
 				tasks: ['less'],

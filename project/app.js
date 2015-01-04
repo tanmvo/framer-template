@@ -3,35 +3,39 @@
 
   layerA = new Layer();
 
-  layerA.width = 320;
+  layerA.width = 640;
 
-  layerA.height = 578;
+  layerA.height = 1156;
 
-  layerA.center();
+  layerA.backgroundColor = '#EFEFEF';
+
+  layerA.scroll = true;
 
   layerB = new Layer({
     superLayer: layerA
   });
 
-  layerB.borderRadius = "10";
-
   layerB.backgroundColor = "red";
 
-  layerB.width = 300;
+  layerB.width = 600;
 
-  layerB.height = 60;
+  layerB.height = 100;
+
+  layerB.name = "button";
 
   layerB.style = {
-    "border-radius": "4px",
+    "border-radius": "8px",
     "text-align": "center",
-    "padding": "15px 20px"
+    "font-size": "42px",
+    "line-height": "42px",
+    "padding": "25px 0"
   };
 
   layerB.html = "Submit";
 
-  layerB.centerX();
+  layerB.midX = 320;
 
-  layerB.y = 508;
+  layerB.y = 1200;
 
   layerB.on(Events.Click, function() {
     return print(this.frame);

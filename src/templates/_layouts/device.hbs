@@ -38,11 +38,10 @@
 
     </head>
     <body>
-		
-
+		{{> body }}
         <script src="framer/framer.js"></script>
-        
-        <script src="framer/templates/iphone-5s-gold.js"></script>
+        {{!-- device-model-color-orientation.js --}}
+        <script src="framer/templates/{{ device }}.js"></script>
         <script src="app.js"></script>
     </body>
 </html>
