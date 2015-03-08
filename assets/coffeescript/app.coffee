@@ -1,29 +1,55 @@
-layerA = new Layer()
+canvas = new Layer
+	width: 640,
+	height: 1136,
+	backgroundColor: '#FFFFFF',
+	scale: 0.5
 
-layerA.width = 640
-layerA.height = 1156
-layerA.backgroundColor = '#EFEFEF'
+contentArea = new Layer
+	superLayer: canvas,
+	width: 640,
+	height: canvas.height
+	backgroundColor: '#ffffff'
 
-layerA.scroll = true
+contentArea.scroll = true
 
-layerB = new Layer({superLayer: layerA})
-layerB.backgroundColor = "red"
+productImage = new Layer
+	superLayer: contentArea,
+	width: 640,
+	height: 378,
+	backgroundColor: '#666666',
 
-layerB.width = 600
-layerB.height = 100
-layerB.name = "button"
+itemIndicator = new Layer
+	superLayer: productImage,
+	width: 60,
+	height: 20,
+	midX: productImage.midX
+	maxY: productImage.maxY - 20
+	borderRadius: '10px',
+	backgroundColor: 'rgba(0, 0, 0, 0.5)',
 
-layerB.style = {
-	"border-radius": "8px",
-	"text-align": "center",
-	"font-size": "42px"
-	"line-height": "42px"
-	"padding": "25px 0"
-}
-layerB.html = "Submit"
+button = new Layer
+	superLayer: canvas,
+	width: 640,
+	height: 80,
+	maxY: canvas.maxY,
+	backgroundColor: '#000000',
 
-layerB.midX = 320
-layerB.y = 1200
+button.html   = "Add to cart"
+button.style  = 
+	'text-align': 'center',
+	'padding': '20px'
 
-layerB.on Events.Click, ->
-	print this.frame
+canvas.center()
+
+
+
+content = new Layer
+	superLayer: contentArea,
+	y: productImage.height,
+	width: canvas.width,
+	height: canvas.height,
+	backgroundColor: '#CDCDCD'
+
+
+# Set content scale
+# Framer.Device.contentScale = 0.5
